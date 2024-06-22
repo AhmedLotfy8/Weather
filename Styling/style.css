@@ -1,0 +1,125 @@
+/* General styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.rounded-left-top {
+    border-top-left-radius: var(--bs-border-radius-lg) !important;
+}
+
+.rounded-left-bottom {
+    border-bottom-left-radius: var(--bs-border-radius-lg) !important;
+}
+
+.rounded-right-top {
+    border-top-right-radius: var(--bs-border-radius-lg) !important
+}
+
+.rounded-right-bottom {
+    border-bottom-right-radius: var(--bs-border-radius-lg) !important
+}
+
+.bg-clr {
+    background-color: #1E202B !important;
+}
+
+.bg-clr1 {
+    background-color: #009AD8 !important;
+}
+
+.bg-clr2 {
+    background-color: #262936 !important;
+}
+
+.bg-clr3 {
+    background-color: #2D303D !important;
+}
+
+.bg-clr4 {
+    background-color: #222531 !important;
+}
+
+.bg-clr5 {
+    background-color: #323544 !important;
+}
+
+.clr {
+    color: #0394CF;
+}
+
+.fs-7 {
+    font-size: 0.9rem !important
+}
+
+.h-350 {
+    height: 350px;
+}
+
+.h-300 {
+    height: 300px;
+}
+
+.sans {
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Sections */
+
+.home {
+    background-image: url(../images/banner.png);
+}
+
+.myBtnClr {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1E202B;
+    --bs-btn-border-color: #1E202B;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #1E202B;
+    --bs-btn-hover-border-color: #1E202B;
+    /* --bs-btn-focus-shadow-rgb: 66, 70, 73; */
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #1E202B;
+    --bs-btn-active-border-color: #1E202B;
+    /* --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); */
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #1E202B;
+    --bs-btn-disabled-border-color: #1E202B
+}
+
+.btn1 {
+    padding: 12px 35px;
+    top: 20px;
+    right: 5px;
+}
+
+.cards {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.btn2 {
+    padding: 12px 24px;
+    top: 20px;
+    right: 5px;
+}
+
+.icons a {
+    background-color: #1E202B;
+    color: #009AD8;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: 300ms;
+}
+
+.icons a:hover {
+    color: white;
+    background-color: #009AD8;
+}
+
