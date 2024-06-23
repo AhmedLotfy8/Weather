@@ -54,6 +54,10 @@
     font-size: 0.9rem !important
 }
 
+.fs-8 {
+    font-size: 0.7rem !important
+}
+
 .h-350 {
     height: 350px;
 }
@@ -67,6 +71,29 @@
 }
 
 /* Sections */
+
+.navbar img {
+    width: 60px;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link.show {
+    position: relative;
+    --bs-navbar-active-color: #009AD8;
+    color: var(--bs-navbar-active-color);
+    padding-inline: 25px;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #009AD8;
+    border-radius: 50px;
+}
 
 .home {
     background-image: url(../images/banner.png);
@@ -122,4 +149,3 @@
     color: white;
     background-color: #009AD8;
 }
-
