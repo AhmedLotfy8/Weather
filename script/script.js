@@ -1,3 +1,4 @@
+var initialCity
 var typedInput = document.querySelectorAll('input')[0]
 
 // card 1
@@ -6,7 +7,7 @@ var displayedDay
 var displayedNumber
 var displayedCity
 var displayedDegree
-var displayedIcon = 'ICON'
+var displayedIcon = `<img src="./images/clear_day.png" alt="">`
 var displayedStatus
 var displayedPercentage
 var displayedWind
@@ -15,7 +16,7 @@ var displayedDirection
 // card 2
 var card2 = document.querySelector('.card2')
 var displayedDay2
-var displayedIcon2 = '2ICON2'
+var displayedIcon2 = `<img src="./images/clear_day.png" alt="">`
 var displayedDegree2
 var displayedDegreeLower2
 var displayedStatus2
@@ -23,16 +24,35 @@ var displayedStatus2
 // card 3
 var card3 = document.querySelector('.card3')
 var displayedDay3
-var displayedIcon3 = '3ICON3'
+var displayedIcon3 = `tits`
 var displayedDegree3
 var displayedDegreeLower3
 var displayedStatus3
 
-
-typedInput.addEventListener('input', function(){
+typedInput.addEventListener('input', function () {
     let cityInput = typedInput.value
     fetchData(cityInput);
 })
+
+async function fetchIP() {
+    try {
+        let res = await fetch(`https://ipinfo.io/json?token=63e87aef4eca84`)
+
+        if (!res.ok) {
+            throw new Error('ERROR!')
+        }
+
+        ipData = await res.json();
+        initialCity = ipData.city;
+
+        fetchData(initialCity)
+    }
+
+    catch (error) {
+        console.error('Problem fetching ip', error)
+    }
+
+}
 
 async function fetchData(cityInput) {
     try {
@@ -44,11 +64,12 @@ async function fetchData(cityInput) {
 
         let data = await response.json();
 
+
         var today = new Date(data.forecast.forecastday[0].date)
         var tomorrow = new Date(data.forecast.forecastday[1].date)
         var afterTomorrow = new Date(data.forecast.forecastday[2].date)
         let options = { weekday: 'long' };
-        
+
         // card 1
         displayedDay = today.toLocaleDateString('en-US', options);
         displayedNumber = today.toLocaleDateString('en-US', { day: 'numeric', month: 'long' });
@@ -58,27 +79,34 @@ async function fetchData(cityInput) {
         displayedPercentage = data.forecast.forecastday[0].day.daily_chance_of_rain;
         displayedWind = data.current.wind_kph;
         displayedDirection = data.current.wind_dir;
+        // Time variables
+        let currentTime = new Date(data.location.localtime)
+        let sunriseTime = new Date(`2000-01-01 ${data.forecast.forecastday[0].astro.sunrise}`)
+        let sunsetTime = new Date(`2000-01-01 ${data.forecast.forecastday[0].astro.sunset}`)
+        let isTimeDay = isDayTime(currentTime.getHours(), sunriseTime.getHours(), sunsetTime.getHours())
+        displayedIcon = getIcon(displayedStatus, isTimeDay);
 
         // card 2
         displayedDay2 = tomorrow.toLocaleDateString('en-US', options);
         displayedDegree2 = data.forecast.forecastday[1].day.maxtemp_c;
         displayedDegreeLower2 = data.forecast.forecastday[1].day.mintemp_c;
         displayedStatus2 = data.forecast.forecastday[1].day.condition.text;
+        displayedIcon2 = getIcon2(displayedStatus2);
 
         //card 3
         displayedDay3 = afterTomorrow.toLocaleDateString('en-US', options);
         displayedDegree3 = data.forecast.forecastday[2].day.maxtemp_c;
         displayedDegreeLower3 = data.forecast.forecastday[2].day.mintemp_c;
         displayedStatus3 = data.forecast.forecastday[2].day.condition.text;
-
+        displayedIcon3 = getIcon2(displayedStatus3);
 
         updateCard1(displayedDay, displayedNumber, displayedCity, displayedDegree, displayedIcon, displayedStatus, displayedPercentage, displayedWind, displayedDirection);
         updateCard2(displayedDay2, displayedIcon2, displayedDegree2, displayedDegreeLower2, displayedStatus2);
         updateCard3(displayedDay3, displayedIcon3, displayedDegree3, displayedDegreeLower3, displayedStatus3);
 
         return data;
-
     }
+
     catch (error) {
         console.error('This has been an error!', error)
     }
@@ -170,3 +198,82 @@ function updateCard3(day, icon, degree, degreeLower, status) {
                         </div>
     `
 }
+
+function getIcon(status, isTimeDay) {
+
+    switch (true) {
+        case (status === "Clear" || status === "Sunny") && isTimeDay:
+            return `<img src="./images/clear_day.png" alt="">`;
+
+        case (status === "Clear" || status === "Sunny") && !isTimeDay:
+            return `<img src="./images/clear_night.png" alt="">`;
+
+        case (status === "Partly Cloudy " || status === "Partly Cloudy" || status === "Partly cloudy") && isTimeDay:
+            return `<img src="./images/partly cloudy_day.png" alt="">`;
+
+        case (status === "Partly Cloudy " || status === "Partly Cloudy" || status === "Partly cloudy") && !isTimeDay:
+            return `<img src="./images/partly cloudy_night.png" alt="">`;
+
+        case status === "Mist":
+            return `<img src="./images/mist.png" alt="">`;
+
+        case status === "Moderate rain" || status === "Light rain":
+            return `<img src="./images/moderate light rain.png" alt="">`;
+
+        case status === "Heavy rain":
+            return `<img src="./images/heavy rain.png" alt="">`;
+
+        case status === "Overcast":
+            return `<img src="./images/overcast.png" alt="">`;
+
+        case status === "Patchy rain nearby":
+            return `<img src="./images/patchy rain nerby.png" alt="">`;
+
+        default:
+            return `<img src="./images/clear_day.png" alt="">`;
+    }
+
+}
+
+function getIcon2(status) {
+
+    switch (true) {
+        case (status === "Clear" || status === "Sunny"):
+            return `<img src="./images/clear_day.png" alt="">`;
+
+        case (status === "Partly Cloudy " || status === "Partly cloudy" || status === "Partly Cloudy"):
+            return `<img src="./images/partly cloudy_day.png" alt="">`;
+
+        case status === "Mist":
+            return `<img src="./images/mist.png" alt="">`;
+
+        case status === "Moderate rain" || status === "Light rain":
+            return `<img src="./images/moderate light rain.png" alt="">`;
+
+        case status === "Heavy rain":
+            return `<img src="./images/heavy rain.png" alt="">`;
+
+        case status === "Overcast":
+            return `<img src="./images/overcast.png" alt="">`;
+
+        case status === "Patchy rain nearby":
+            return `<img src="./images/patchy rain nerby.png" alt="">`;
+
+        default:
+            return `<img src="./images/clear_day.png" alt="">`;
+    }
+    
+}
+
+function isDayTime(currentTime, sunriseTime, sunsetTime) {
+
+    if (sunriseTime <= currentTime && currentTime < sunsetTime) {
+        return true;
+    }
+
+    else
+        return false
+
+}
+
+fetchIP();
