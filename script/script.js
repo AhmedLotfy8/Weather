@@ -56,7 +56,7 @@ async function fetchIP() {
 
 async function fetchData(cityInput) {
     try {
-        let response = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=a814eb59ccb34049949202154242306&q=${cityInput}&days=3`)
+        let response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a814eb59ccb34049949202154242306&q=${cityInput}&days=3`)
 
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
