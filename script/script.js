@@ -24,7 +24,7 @@ var displayedStatus2
 // card 3
 var card3 = document.querySelector('.card3')
 var displayedDay3
-var displayedIcon3 = `tits`
+var displayedIcon3 = `<img src="./images/clear_day.png" alt="">`
 var displayedDegree3
 var displayedDegreeLower3
 var displayedStatus3
